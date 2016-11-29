@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tasks', 'TaskController@index');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/tasks', 'TaskController@index');
+});
