@@ -20,6 +20,10 @@ class TaskControllerTest extends TestCase
         // 2. Execute
         // 3. Comprovacions/assercions/shoulds/expectations
 
-        
+        $response = $this->call('GET', '/tasques');
+//        $response->content();
+        $this->assertEquals(200, $response->status());
+
+
     }
 }
