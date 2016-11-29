@@ -16,6 +16,10 @@ class TaskControllerTest extends TestCase
      */
     public function testExample()
     {
-        $this->assertTrue(true);
+        // 1. Prepare
+        // 2. Execute
+        // 3. Comprovacions/assercions/shoulds/expectations
+
+        
     }
 }
