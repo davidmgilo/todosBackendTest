@@ -25,7 +25,7 @@ class TaskController extends Controller
     {
         $tasks = [];
 
-        $tasks = $this->client->request('GET',$this->urlTodosBackend);
+        $tasks = \GuzzleHttp\json_decode($this->client->request('GET',$this->urlTodosBackend)->getBody())->data;
 
         return view ('tasks')->with('tasks',$tasks);
     }

@@ -25,9 +25,9 @@
 					</thead>
 					<tbody>
 
-					@foreach ($tasks as $task)
-						<tr v-for="(todo, index) in filteredTodos">
-							<td>#</td>
+					@foreach ($tasks as $key =>$task)
+						<tr>
+							<td>{{$key + 1}}</td>
 							<td>{{$task->name}}</td>
 							<td>{{$task->priority}}</td>
 							<td>{{$task->done}}</td>
