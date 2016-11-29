@@ -11,10 +11,40 @@ class TaskControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
+    protected $apiResult = '[{
+"name": "Suscipit qui vitae voluptatem illo unde neque commodi.",
+"done": true,
+"priority": 5
+},
+{
+    "name": "Quia et dolores et.",
+"done": true,
+"priority": 8
+},
+{
+    "name": "Quaerat dicta aperiam unde dicta ut repellendus excepturi necessitatibus.",
+"done": true,
+"priority": 5
+}]';
+
+    public function __construct()
+    {
+        $this->mock = Mockery::mock('GuzzleHttp\Client');
+    }
+
+
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+
     /*
      * Overwrite createApplication to add Http Kernel
      * see: https://github.com/laravel/laravel/pull/3943
      *      https://github.com/laravel/framework/issues/15426
+     */
+    /**
+     * TaskControllerTest constructor.
      */
     public function createApplication()
     {
@@ -35,10 +65,25 @@ class TaskControllerTest extends TestCase
     public function testExample()
     {
         // 1. Prepare
+        // 1.1. Isolate
         // 2. Execute
         // 3. Comprovacions/assercions/shoulds/expectations
 
+        $stream = \GuzzleHttp\Psr7\stream_for('{"data": '. $this->apiResult . ' }');
+
+        $response = new \GuzzleHttp\Psr7\Response(
+            200,
+            ['Content-type' => 'application/json'],
+            $stream
+        );
+
         $this->login();
+        $this->mock
+            ->shouldReceive('request')
+            ->once()
+            ->andReturn($response);
+
+        $this->app->instance('GuzzleHttp\Client',$this->mock);
 
         $response = $this->call('GET', '/tasks');
 //        $response->content();
