@@ -24,7 +24,7 @@ class TaskControllerTest extends TestCase
 //        $response->content();
         $this->assertEquals(200, $response->status());
 
-        $this->
+        $this->assertViewHas('tasks');
 
 
     }
