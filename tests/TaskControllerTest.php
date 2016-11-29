@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class TaskControllerTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * A basic test example.
      * @group todo
@@ -20,6 +22,8 @@ class TaskControllerTest extends TestCase
         // 2. Execute
         // 3. Comprovacions/assercions/shoulds/expectations
 
+        $this->login();
+
         $response = $this->call('GET', '/tasks');
 //        $response->content();
         $this->assertEquals(200, $response->status());
@@ -27,5 +31,12 @@ class TaskControllerTest extends TestCase
         $this->assertViewHas('tasks');
 
 
+    }
+
+    protected function login()
+    {
+        $user = factory(App\User::class)->create();
+
+        $this->actingAs($user);
     }
 }
